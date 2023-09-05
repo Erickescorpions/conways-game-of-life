@@ -1,5 +1,6 @@
 import random
 from enum import Enum
+import time
 
 class CellState(Enum):
     DEAD = 0
@@ -22,16 +23,20 @@ class Board:
 
 
 def pretty_print(board : Board):
-    print('-' * (board.width + 2))
+    # print('-' * (board.width + 2))
     for line in board.cells:
-        print('|', end="")
+        # print('|', end="")
         for val in line:
             if val == 1:
-                print('◼', end="")
+                print('█', end="")
             else:
                 print(' ', end="")
-        print('|')
-    print('-' * (board.width + 2))
+        # print('|')
+        print("")
+    # print('-' * (board.width + 2))
+
+    for _ in range(len(board.cells)):
+        print("\033[A\r", end="")
 
 def random_state(width: int, height: int) -> list:
     return [[random.randint(0, 1) for _ in range(width)] for _ in range(height)]
@@ -173,3 +178,4 @@ if __name__ == '__main__':
     while True:
         pretty_print(board)
         board.cells = next_board_state(board.cells)
+        time.sleep(0.1)
